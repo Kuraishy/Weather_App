@@ -18,38 +18,15 @@
 
 		{% else %}
 
-			<div class="jumbotron">
+			<div class="jumbotron {{ category_color }}">
 			  <h1 class="display-4">{{ api.0.Category.Name}}</h1>
 			  <p class="lead">{{ api.0.ReportingArea }} Air Quality: {{ api.0.AQI }} </p>
 			  <!--<hr class="my-4">-->
 
-			  {% if api.0.Category.Name == "Good" %}
-			  	<p>(0-50) Air quality is considered satisfactory, and air pollution poses litthle or no risk</p>
-
-			  {% elif api.0.Category.Name == "Moderate" %}
-			  	<p>(51-100) Air quality is considered aceptable</p>
-
-			  {% elif api.0.Category.Name == "Unhealthy for Sensitive Groups" %}
-			  	<p>(101-150) Air quality is considered unhealthy for people with some ilnesses </p>
-
-			  {% elif api.0.Category.Name == "Unhealthy" %}
-			  	<p>(151-200) Air quality is considered unhealthy </p>
-
-			  {% elif api.0.Category.Name == "Very Unhealthy" %}
-			  	<p>(201-300) Air quality is considered unhealthy </p>
-
-			  {% elif api.0.Category.Name == "Hazardous" %}
-			  	<p>(301-500) Air quality is considered hell </p>
+			  {{ category_description }}
 
 
-
-
-
-			  {% endif %}
-
-
-
-			  <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+		
 
 			</div>
 
