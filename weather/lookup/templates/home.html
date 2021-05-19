@@ -12,6 +12,11 @@
 	<h1>Hello World</h1>
 	<br/>
 	<!--{{api.0}}<br/><br/>-->
+
+	{% if zipcodeHome %} <!--SI HAY ALGO  EN EL ELEMENTO ZIPCODEHOME-->
+		{{ zipcodeHome }}
+	{% endif %}
+
 	{% if api %} 
 		{% if api == "Error..." %}
 			There was an error, please try again...

@@ -6,28 +6,44 @@ def home(request):
 	import json
 	import requests
 
-	api_request = requests.get("https://www.airnowapi.org/aq/observation/zipCode/current/?format=application/json&zipCode=20002&distance=5&API_KEY=1B384AA4-1968-4F64-A65E-7E4C536F160E")
+	# si se envio datos
+	if request.method == "POST":
+		zipcode = request.POST['zipcodeBase'] #obtener el zip code
+		api_request = requests.get(f"https://www.airnowapi.org/aq/observation/zipCode/current/?format=application/json&zipCode={zipcode}&distance=5&API_KEY=1B384AA4-1968-4F64-A65E-7E4C536F160E")
+		try:
+			api = json.loads(api_request.content)
+			categoryDescription, categoryColor = weatherStatus(api)
+		except Exception as e:
+			print(e)
+			api = e	
+		return render(request, 'home.html',{'api':api, 'category_description':categoryDescription, 'category_color':categoryColor}) 
+	
 
-	try:
-		api = json.loads(api_request.content)
-		categoryDescription, categoryColor = weatherStatus(api)
+	# if no data were input then return default home
+	else:
+		api_request = requests.get(f"https://www.airnowapi.org/aq/observation/zipCode/current/?format=application/json&zipCode=20002&distance=5&API_KEY=1B384AA4-1968-4F64-A65E-7E4C536F160E")
+		try:
+			api = json.loads(api_request.content)
+			categoryDescription, categoryColor = weatherStatus(api)
+		except Exception as e:
+			print(e)
+			api = e	
+		return render(request, 'home.html',{'api':api, 'category_description':categoryDescription, 'category_color':categoryColor}) 
+	
 
 
-	except Exception as e:
-		print(e)
-		api = e
 
 
-	return render(request, 'home.html',{'api':api, 'category_description':categoryDescription, 'category_color':categoryColor}) 
+
+
 
 def about(request):
 	return render(request, 'about.html',{}) 
 
 
+
 def weatherStatus(api):
 	categoria = api[0]['Category']['Name']
-	categoriaColor=''
-
 	if categoria == "Good":
 		return f"(0-50) Air quality is considered satisfactory, and air pollution poses litthle or no risk", "good"
 
