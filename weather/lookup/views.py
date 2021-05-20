@@ -16,6 +16,8 @@ def home(request):
 		except Exception as e:
 			print(e)
 			api = e	
+			categoryColor = ""
+			categoryDescription = "No valid Zip Code"
 		return render(request, 'home.html',{'api':api, 'category_description':categoryDescription, 'category_color':categoryColor}) 
 	
 
